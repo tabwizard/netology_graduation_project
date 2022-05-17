@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: wizard
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+v4xsQEddhyezXEasbSWpzTBcyrFGuc+cIikz+2g1/jAAbAFbZesovuGN/L4kC57idYyUUWziUzUnvq3Uu3oBeLZTBbSfxqBVC9FPV2B/T2HwKgu7sOWZytdoWtjiXWPcPdkQiY1+jS5+JK9lcgh7fRnqI7z6XDYeGKH9XXzP+2fM7CmVz0CmjM0sXWxDc8C1Gguy3cJ9HV+zGDeUjiooPRzxm7Tz4OQ3ipv+SxxVKjAjaDlCnqaj5uGtF2xg6vkR7ot+W8PfvALzbWtIjBJE4a25jp0eWFiGrMMOOIrqP5g7DnZaM1zSpMa0j5UAFejK9p/rhFJAHfBzUz20HSKJViLY8cGs0DCuDlkguJFQboa1LDV8rVicWBvYmzaHWFlF0EBUI50cpSklMMktKrWGJ+OfGxS6/AJ4Neu/OrBvZ6XerDHR6sTPRQsXvA3n2kB72FTi3RWT7QHsPAMaAt12TO0chHEn5u1zm85mOAnTWhYHxYbM0Q0NJSTYKONJHuE= wizard@wizard-pc
