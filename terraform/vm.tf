@@ -1,6 +1,6 @@
 resource "yandex_compute_instance" "k8s-control-plane" {
-  name     = "k8s-control-plane"
-  hostname = "k8s-control-plane"
+  name     = "${terraform.workspace}-k8s-control-plane"
+  hostname = "${terraform.workspace}-k8s-control-plane"
   zone     = var.zones[0]
 
   resources {
@@ -27,8 +27,8 @@ resource "yandex_compute_instance" "k8s-control-plane" {
 
 resource "yandex_compute_instance" "k8s-node" {
   count    = 2
-  name     = "k8s-node-${count.index + 1}"
-  hostname = "k8s-node-${count.index + 1}"
+  name     = "${terraform.workspace}-k8s-node-${count.index + 1}"
+  hostname = "${terraform.workspace}-k8s-node-${count.index + 1}"
   zone     = var.zones[count.index + 1]
   resources {
     cores  = 2

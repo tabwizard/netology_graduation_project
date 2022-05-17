@@ -1,11 +1,12 @@
 #!/bin/bash
 
 set -e
+WS=$(terraform workspace show)
 
 echo ---
 printf "all:\n"
 printf "  hosts:\n"
-printf "    k8s-control-plane:\n      ansible_host: "
+printf "    $WS-k8s-control-plane:\n      ansible_host: "
 terraform output -json control_plane_public_ip | jq -j
 printf "\n      ip: "
 terraform output -json control_plane_private_ip | jq -j
@@ -13,7 +14,7 @@ printf "\n"
 
 for num in 1 2
 do
-printf "    k8s-node-$num:\n      ansible_host: "
+printf "    $WS-k8s-node-$num:\n      ansible_host: "
 terraform output -json nodes_public_ips | jq -j ".[$num-1]"
 printf "\n      ip: "
 terraform output -json nodes_private_ips | jq -j ".[$num-1]"
@@ -31,16 +32,16 @@ cat << EOF
   children:
     kube_control_plane:
       hosts:
-        k8s-control-plane:
+        $WS-k8s-control-plane:
     kube_node:
       hosts:
-        k8s-node-1:
-        k8s-node-2:
+        $WS-k8s-node-1:
+        $WS-k8s-node-2:
     etcd:
       hosts:
-        k8s-control-plane:
-        k8s-node-1:
-        k8s-node-2:
+        $WS-k8s-control-plane:
+        $WS-k8s-node-1:
+        $WS-k8s-node-2:
     k8s_cluster:
       children:
         kube_control_plane:
