@@ -2,7 +2,7 @@
 
 set -e 
 KUBESPRAY=/home/wizard/Ansible/kubespray
-PWD=$(pwd)
+PWND=$(pwd)
 terraform apply -auto-approve
 
 rm -rf "${KUBESPRAY}/inventory/pirozhkov-k8s"
@@ -15,8 +15,6 @@ cd "${KUBESPRAY}"
 
 ansible-playbook -i inventory/pirozhkov-k8s/hosts.yaml --become --become-user=root cluster.yml
 
-cd "${PWD}"
+cd "${PWND}"
 
 ./get_k8s_config.sh
-
-kg no

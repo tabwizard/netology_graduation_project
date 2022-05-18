@@ -18,3 +18,6 @@ output "nodes_private_ips" {
   value       = yandex_compute_instance.k8s-node.*.network_interface.0.ip_address
 }
 
+output "balancer_ip_address" {
+  value = [for s in yandex_lb_network_load_balancer.k8s-load-balancer.listener: s.external_address_spec.*.address]
+}

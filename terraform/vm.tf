@@ -10,7 +10,9 @@ resource "yandex_compute_instance" "k8s-control-plane" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd83869rbingor0in0ui"
+      image_id = "fd8jekrp7jglcetucr2a"
+      size     = 20
+      type     = "network-ssd"
     }
   }
 
@@ -37,7 +39,11 @@ resource "yandex_compute_instance" "k8s-node" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd83869rbingor0in0ui" // centos7
+      image_id = "fd8jekrp7jglcetucr2a"
+      // "fd8jekrp7jglcetucr2a" Ubuntu 20.04 LTS
+      // "fd8p7vi5c5bbs2s5i67s"  centos7
+      size     = 20
+      type     = "network-ssd"
     }
   }
 
