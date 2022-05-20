@@ -2,20 +2,20 @@
 all:
   hosts:
     prod-k8s-control-plane:
-      ansible_host: 51.250.76.139
-      ip: 192.168.110.23
+      ansible_host: 51.250.13.239
+      ip: 192.168.110.3
     prod-k8s-node-1:
-      ansible_host: 84.201.177.102
-      ip: 192.168.120.15
+      ansible_host: 51.250.21.155
+      ip: 192.168.120.5
     prod-k8s-node-2:
-      ansible_host: 51.250.32.139
-      ip: 192.168.130.21
+      ansible_host: 51.250.38.79
+      ip: 192.168.130.19
 
   vars:
     ansible_user: wizard
     ansible_ssh_private_key_file: /home/wizard/.ssh/yc/yc
     loadbalancer_apiserver:
-      address: 51.250.76.139
+      address: 51.250.13.239
       port: 6443
 
   children:

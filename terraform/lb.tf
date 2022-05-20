@@ -21,11 +21,22 @@ resource "yandex_lb_network_load_balancer" "k8s-load-balancer" {
   name = "k8s-load-balancer"
 
   listener {
-    name = "my-listener"
+    name = "web-listener"
     port = 80
     target_port = 30080
     external_address_spec {
       ip_version = "ipv4"
+      address = var.lb_address
+    }
+  }
+  
+  listener {
+    name = "grafana-listener"
+    port = 3000
+    target_port = 30090
+    external_address_spec {
+      ip_version = "ipv4"
+      address = var.lb_address
     }
   }
 

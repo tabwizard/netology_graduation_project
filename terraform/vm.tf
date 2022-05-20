@@ -34,7 +34,7 @@ resource "yandex_compute_instance" "k8s-node" {
   zone     = var.zones[count.index + 1]
   resources {
     cores  = 2
-    memory = 2
+    memory = 4
   }
 
   boot_disk {
