@@ -57,3 +57,4 @@ resource "yandex_compute_instance" "k8s-node" {
   }
 
 }
+

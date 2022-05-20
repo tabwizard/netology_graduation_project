@@ -9,3 +9,4 @@ resource "yandex_vpc_subnet" "subnet" {
   network_id     = yandex_vpc_network.pirozhkov-netology-vpc.id
   v4_cidr_blocks = [var.cidr[terraform.workspace][count.index]]
 }
+
