@@ -4,8 +4,7 @@ locals {
 }
 
 provider "yandex" {
-//  service_account_key_file = "/home/wizard/.yckey.json"
-  token                    = "AQAAAAAgZ5SAAATuwSUY3R8RAESwpr--iEJGObg"
+  service_account_key_file = "/home/wizard/.yckey.json"
   cloud_id                 = local.cloud_id
   folder_id                = local.folder_id
   zone                     = var.zones[1]
