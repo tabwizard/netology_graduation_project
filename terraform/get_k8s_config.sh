@@ -30,18 +30,27 @@ until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; 
 kubectl apply -f ../kube-prometheus/manifests/
 kubectl apply -f ../kube-prometheus/grafana-svc.yaml -f ../kube-prometheus/grafana-NP.yaml
 
+# Устанавливаем gitlab agent в кластер
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
+helm upgrade --install gitlab-agent gitlab/gitlab-agent \
+    --namespace gitlab-agent \
+    --create-namespace \
+    --set config.token=VM9qF1ut7X68Hte5ytq8wvC2eQa3Gs3Do5ZBzLQYZCAJs9yu9g \
+    --set config.kasAddress=wss://kas.gitlab.com
+
 # Создаем qbec манифест тестового приложения из шаблона
   #cp "../template.yml" "../web.yml"
   #sed -i "s/  namespace:/  namespace: ${WS}/g" "../web.yml"
-cp "../webtestapp/qbec.template" "../webtestapp/qbec.yaml"
-sed -i "s/99.99.99.99/${IPK8S}/g" "../webtestapp/qbec.yaml"
+cp "../../nginxn/webtestapp/qbec.template" "../../nginxn/webtestapp/qbec.yaml"
+sed -i "s/99.99.99.99/${IPK8S}/g" "../../nginxn/webtestapp/qbec.yaml"
 
 # Создаем namespace в K8S с тем же именем что и terraform workspace
 kubectl create ns $WS
 
 # Применяем манифест qbec в кластер K8S в соответствующее namespace
   #kubectl apply -f "../web.yml"
-cd ../webtestapp
+cd ../../nginxn/webtestapp
 qbec apply $WS --yes
 sleep 5
 

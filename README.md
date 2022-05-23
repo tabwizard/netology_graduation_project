@@ -182,6 +182,7 @@ export YC_SERVICE_ACCOUNT_KEY_FILE="/home/wizard/.yckey.json"
 ```bash
 terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-config "secret_key=$YC_STORAGE_SECRET_KEY"
 ```  
+![YC s3 backet](./img/1.png)  
 
 Напишем **[манифесты для terraform](/terraform)**  
 
@@ -193,3 +194,9 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 - создавать qbec манифест тестового приложения из шаблона,
 - создавать namespace в K8S с тем же именем что и terraform workspace,
 - применять манифест qbec в кластер K8S в соответствующее namespace,
+
+
+jenkins 
+user: wizard
+password: srH!Tspod9h4oum*9G8jY5Z2
+
