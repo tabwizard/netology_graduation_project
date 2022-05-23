@@ -1,0 +1,41 @@
+---              
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-service
+  namespace: prod
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+  type: NodePort
+  selector:
+    app: web
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: prod
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: web
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginxn
+        image: tabwizard/nginxn:latest
+        ports:
+        - containerPort: 80

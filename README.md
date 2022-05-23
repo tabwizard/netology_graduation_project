@@ -165,3 +165,31 @@
 2. Откладывание выполнения курсового проекта на последний момент.
 3. Ожидание моментального ответа на свой вопрос. Дипломные руководители работающие разработчики, которые занимаются, кроме преподавания, 
   своими проектами. Их время ограничено, поэтому постарайтесь задавать правильные вопросы, чтобы получать быстрые ответы :)
+
+---
+## Решение
+
+Для начала подготовим системные переменные для Yandex Cloud:  
+
+```bash
+export YC_STORAGE_ACCESS_KEY="XXXXXXXXXXXXXX-XXXXXXXXXX"
+export YC_STORAGE_SECRET_KEY="XXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+export YC_SERVICE_ACCOUNT_KEY_FILE="/home/wizard/.yckey.json"
+```  
+
+Создадим руками через web-интерфейс YC s3 backet и проинициализируем terraform backend:  
+
+```bash
+terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-config "secret_key=$YC_STORAGE_SECRET_KEY"
+```  
+
+Напишем **[манифесты для terraform](/terraform)**  
+
+Установим kubespray и **[напишем скрипт](/terraform/generate_inventory.sh)**, который будет генерировать **[инвентори для kubespray](/terraform/hosts.yaml)** из развернутой terraform-ом инфраструктуры.
+Напишем скрипты, которые будут:
+- копировать `.kube/config` с control plane созданного kubespray кластера в локальный каталог для использования с kubectl,
+- подключаться к кластеру K8S, смотреть, что всё работает, поды есть,
+- устанавливать kube-prometheus,
+- создавать qbec манифест тестового приложения из шаблона,
+- создавать namespace в K8S с тем же именем что и terraform workspace,
+- применять манифест qbec в кластер K8S в соответствующее namespace,
