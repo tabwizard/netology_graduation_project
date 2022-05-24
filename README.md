@@ -262,6 +262,7 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 
 ![YC s3 backet](./img/20.png)  
 ![YC s3 backet](./img/21.png)  
+![YC s3 backet](./img/22.png)  
 
 ### Ссылки:  
 
