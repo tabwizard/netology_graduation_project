@@ -267,6 +267,9 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 Тестовое приложение доступно по адресу **[http://51.250.42.246](http://51.250.42.246)**  
 К `Grafana` можно подключиться по ссылке **[http://51.250.42.246:3000](http://51.250.42.246:3000)**  с логином `admin` и паролем `ADMIN123456!`  
 Репозиторий тестового приложения **[https://gitlab.com/tabwizard/nginxn](https://gitlab.com/tabwizard/nginxn)**  
+**[Docker image](https://hub.docker.com/repository/docker/tabwizard/nginxn)** для тестового приложения  
+**[Репозиторий](https://gitlab.com/tabwizard/k8s-tools)** и **[Docker image](https://hub.docker.com/repository/docker/tabwizard/k8s-tools)** для деплоя тестового приложения в `gitlab pipeline`  
 Репозиторий `qbec` с настройками для кластера **[https://gitlab.com/tabwizard/nginxn/-/tree/main/webtestapp](https://gitlab.com/tabwizard/nginxn/-/tree/main/webtestapp)**  
 Репозиторий **[Terraform](./terraform)**  
-Репозиторий `kubespray` полностью дефолтный за исключением **[hosts.yaml (инвентори для kubespray)](/terraform/hosts.yaml)**
+Репозиторий `kubespray` полностью дефолтный за исключением **[hosts.yaml (инвентори для kubespray)](/terraform/hosts.yaml)**  
+
