@@ -261,6 +261,7 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 Поменяем что-нибудь в репозитории с нашим тестовым приложением и посмотрим, как на `gitlab` отработает `pipeline`, соберет новый `docker image` и задеплоит приложение в кластер:  
 
 ![YC s3 backet](./img/20.png)  
+![YC s3 backet](./img/21.png)  
 
 ### Ссылки:  
 
