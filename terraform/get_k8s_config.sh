@@ -14,6 +14,14 @@ sed -i "s/cluster.local/${WS}.k8s.yc/g" "/home/wizard/.kube/config.${WS}"
 cp "/home/wizard/.kube/config.${WS}" "/home/wizard/.kube/config"
 export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config.$WS
 
+# Копируем .kube/config с ControlPlane в gitlab для CI/CD      https://docs.gitlab.com/ee/api/project_level_variables.html
+curl --request PUT --header "PRIVATE-TOKEN: ${GITLAB_PRIVATE_TOKEN}" \
+    "https://gitlab.com/api/v4/projects/tabwizard%2Fnginxn/variables/CI_KUBE_CONFIG" \
+    --form "value=$(cat $HOME/.kube/config)"
+curl --request PUT --header "PRIVATE-TOKEN: ${GITLAB_PRIVATE_TOKEN}" \
+    "https://gitlab.com/api/v4/projects/tabwizard%2Fnginxn/variables/CI_WORKSPACE" \
+    --form "value=${WS}"
+
 # Устанавливаем пакеты для работы с NFS в кластер
   # ssh -o "StrictHostKeyChecking no" wizard@$IPK8S -i ~/.ssh/yc/yc "sudo apt install nfs-common -y"
   # for num in 1 2
@@ -51,7 +59,7 @@ kubectl create ns $WS
 # Применяем манифест qbec в кластер K8S в соответствующее namespace
   #kubectl apply -f "../web.yml"
 cd ../../nginxn/webtestapp
-qbec apply $WS --yes
+qbec apply $WS --vm:ext-str image_tag="v1.0.0" --wait --yes
 sleep 5
 
 # Смотрим, что под с тестовым приложением задеплоился
