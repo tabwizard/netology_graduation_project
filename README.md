@@ -241,6 +241,7 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 
 ![YC s3 backet](./img/11.png)  
 ![YC s3 backet](./img/12.png)  
+![YC s3 backet](./img/12_1.png)  
 ![YC s3 backet](./img/13.png)  
 
 Подключимся к свежеподнятому K8S кластеру (с которого скрипт любезно достал `.kube/config` и указал его как `KUBECONFIG` чтобы у нас подключение происходило куда нужно) и посмотрим на него:  
