@@ -9,12 +9,32 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 80
-      nodePort: 30080
-  type: NodePort
   selector:
     app: web
-    
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-httpd-service
+  namespace:
+spec:
+  defaultBackend:
+    service:
+      name: httpd-service
+      port:
+        number: 80
+  rules:
+  - host: pirozhkov-aa.ru
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: httpd-service
+            port:
+              number: 80
+
 ---
 apiVersion: apps/v1
 kind: Deployment

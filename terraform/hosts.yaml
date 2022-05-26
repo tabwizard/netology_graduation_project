@@ -1,36 +1,36 @@
 ---
 all:
   hosts:
-    prod-k8s-control-plane:
-      ansible_host: 51.250.87.241
-      ip: 192.168.110.5
-    prod-k8s-node-1:
-      ansible_host: 51.250.109.134
-      ip: 192.168.120.10
-    prod-k8s-node-2:
-      ansible_host: 51.250.41.35
-      ip: 192.168.130.15
+    node1:
+      ansible_host: 51.250.93.216
+      ip: 192.168.110.12
+    node2:
+      ansible_host: 51.250.108.144
+      ip: 192.168.120.9
+    node3:
+      ansible_host: 51.250.32.66
+      ip: 192.168.130.27
 
   vars:
     ansible_user: wizard
     ansible_ssh_private_key_file: /home/wizard/.ssh/yc/yc
     loadbalancer_apiserver:
-      address: 51.250.87.241
+      address: 51.250.93.216
       port: 6443
 
   children:
     kube_control_plane:
       hosts:
-        prod-k8s-control-plane:
+        node1:
     kube_node:
       hosts:
-        prod-k8s-node-1:
-        prod-k8s-node-2:
+        node2:
+        node3:
     etcd:
       hosts:
-        prod-k8s-control-plane:
-        prod-k8s-node-1:
-        prod-k8s-node-2:
+        node1:
+        node2:
+        node3:
     k8s_cluster:
       children:
         kube_control_plane:

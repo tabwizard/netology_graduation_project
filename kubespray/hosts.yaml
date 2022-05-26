@@ -1,0 +1,43 @@
+---
+all:
+  hosts:
+    prod-k8s-node1:
+      ansible_host: 51.250.93.249
+      ip: 192.168.110.15
+      etcd_member_name: etcd1
+    prod-k8s-node2:
+      ansible_host: 51.250.18.104
+      ip: 192.168.120.10
+      etcd_member_name: etcd2
+    prod-k8s-node3:
+      ansible_host: 51.250.38.2
+      ip: 192.168.130.12
+      etcd_member_name: etcd3
+  children:
+    kube_control_plane:
+      hosts:
+        prod-k8s-node1:
+        prod-k8s-node2:
+    kube_node:
+      hosts:
+        prod-k8s-node1:
+        prod-k8s-node2:
+        prod-k8s-node3:
+    etcd:
+      hosts:
+        prod-k8s-node1:
+        prod-k8s-node2:
+        prod-k8s-node3:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+
+  vars:
+    ansible_user: wizard
+    ansible_ssh_private_key_file: /home/wizard/.ssh/yc/yc
+    loadbalancer_apiserver:
+      address: 51.250.93.249
+      port: 6443

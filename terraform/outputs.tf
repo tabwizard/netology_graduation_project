@@ -1,11 +1,6 @@
 output "control_plane_public_ip" {
   description = "Public IP addresses for control-plane"
-  value       = yandex_compute_instance.k8s-control-plane.network_interface.0.nat_ip_address
-}
-
-output "control_plane_private_ip" {
-  description = "Private IP addresses for control-plane"
-  value       = yandex_compute_instance.k8s-control-plane.network_interface.0.ip_address
+  value       = yandex_compute_instance.k8s-node[0].network_interface.0.nat_ip_address
 }
 
 output "nodes_public_ips" {
@@ -19,5 +14,9 @@ output "nodes_private_ips" {
 }
 
 output "balancer_ip_address" {
-  value = [for s in yandex_lb_network_load_balancer.k8s-load-balancer.listener: s.external_address_spec.*.address if s.name == "web-listener"]
+  value = yandex_vpc_address.addr-k8s.external_ipv4_address[0].address
+}
+
+output "balancer_web_ip_address" {
+  value = yandex_vpc_address.addr-web.external_ipv4_address[0].address
 }
