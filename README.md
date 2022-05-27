@@ -11,7 +11,7 @@
   - [Что необходимо для сдачи задания?](#что-необходимо-для-сдачи-задания)
   - [Как правильно задавать вопросы дипломному руководителю?](#как-правильно-задавать-вопросы-дипломному-руководителю)
   - [Решение](#решение)
-    - [Ссылки:](#ссылки)
+    - [Ссылки](#ссылки)
 
 ---
 
@@ -186,13 +186,14 @@
 ## Решение
 
 Все действия будут производиться на домашней машине с ArchLinux.  
-Для начала подготовим системные переменные для Yandex Cloud:  
+Для начала подготовим системные переменные для Yandex Cloud и Gitlab:  
 
 ```bash
 export YC_STORAGE_ACCESS_KEY="XXXXXXXXXXXXXX-XXXXXXXXXX"
 export YC_STORAGE_SECRET_KEY="XXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 export YC_SERVICE_ACCOUNT_KEY_FILE="/home/wizard/.yckey.json"
 export GITLAB_PRIVATE_TOKEN="xxxxx-XXXXXXXXXXXXXXXXXXXX"
+export GITLAB_AGENT_TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```  
 
 Создадим руками через web-интерфейс YC s3 backet и проинициализируем terraform backend:  
@@ -217,6 +218,8 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 
 - подготавливать инвентори для kubespray из шаблона,
 - копировать сгенерированный `hosts.yaml` в созданный инвентори,
+- включать поддержку ingress-controller,
+- менять имя кластера,
 - создавать кластер K8S с помощью kubespray,
 - копировать `.kube/config` с control plane созданного kubespray кластера в локальный каталог для использования с kubectl,
 - копировать `.kube/config` с control plane созданного kubespray кластера в переменную в gitlab для использования в pipeline с qbec и kubectl,
@@ -231,48 +234,58 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 
 Запустим стартовый скрипт **[setup_k8s.sh](./setup_k8s.sh)**, будем ждать и любоваться как поднимается инфраструктура, кластер, деплоятся приложения и т.д.:  
 
-![YC s3 backet](./img/6.png)  
-![YC s3 backet](./img/7.png)  
-![YC s3 backet](./img/8.png)  
-![YC s3 backet](./img/9.png)  
-![YC s3 backet](./img/10.png)  
+![YC s3 backet](./img/6.1.png)  
+![YC s3 backet](./img/6.2.png)  
+![YC s3 backet](./img/6.3.png)  
+![YC s3 backet](./img/6.4.png)  
+![YC s3 backet](./img/6.5.png)  
+![YC s3 backet](./img/6.6.png)  
+![YC s3 backet](./img/6.7.png)  
+![YC s3 backet](./img/6.8.png)  
+![YC s3 backet](./img/6.9.png)  
 
 Сходим на Yandex Cloud, посмотрим на поднявшуюся инфраструктуру:  
 
-![YC s3 backet](./img/11.png)  
-![YC s3 backet](./img/12.png)  
-![YC s3 backet](./img/12_1.png)  
-![YC s3 backet](./img/13.png)  
+![YC s3 backet](./img/7.1.png)  
+![YC s3 backet](./img/7.2.png)  
+![YC s3 backet](./img/7.3.png)  
+![YC s3 backet](./img/7.4.png)  
+![YC s3 backet](./img/7.5.png)  
+![YC s3 backet](./img/7.6.png)  
+![YC s3 backet](./img/7.7.png)  
 
 Подключимся к свежеподнятому K8S кластеру (с которого скрипт любезно достал `.kube/config` и указал его как `KUBECONFIG` чтобы у нас подключение происходило куда нужно) и посмотрим на него:  
 
-![YC s3 backet](./img/14.png)  
-![YC s3 backet](./img/15.png)  
-![YC s3 backet](./img/16.png)  
-![YC s3 backet](./img/17.png)  
+![YC s3 backet](./img/8.1.png)  
+![YC s3 backet](./img/8.2.png)  
+![YC s3 backet](./img/8.3.png)  
+![YC s3 backet](./img/8.4.png)  
+![YC s3 backet](./img/8.5.png)  
 
 У нас в кластер и наше тестовое приложение задеплоилось:  
 
-![YC s3 backet](./img/18.png)  
+![YC s3 backet](./img/9.1.png)  
 
 И `kube-prometheus` уже работает:  
 
-![YC s3 backet](./img/19.png)  
+![YC s3 backet](./img/10.1.png)  
+![YC s3 backet](./img/10.2.png)  
 
 Поменяем что-нибудь в репозитории с нашим тестовым приложением и посмотрим, как на `gitlab` отработает `pipeline`, соберет новый `docker image` и задеплоит приложение в кластер:  
 
-![YC s3 backet](./img/20.png)  
-![YC s3 backet](./img/21.png)  
-![YC s3 backet](./img/22.png)  
+![YC s3 backet](./img/11.1.png)  
+![YC s3 backet](./img/11.2.png)  
+![YC s3 backet](./img/11.3.png)  
+![YC s3 backet](./img/11.5.png)  
+![YC s3 backet](./img/11.4.png)  
 
-### Ссылки:  
+### Ссылки
 
-Тестовое приложение доступно по адресу **[http://51.250.42.246](http://51.250.42.246)**  
-К `Grafana` можно подключиться по ссылке **[http://51.250.42.246:3000](http://51.250.42.246:3000)**  с логином `admin` и паролем `ADMIN123456!`  
-Репозиторий тестового приложения **[https://gitlab.com/tabwizard/nginxn](https://gitlab.com/tabwizard/nginxn)**  
+Тестовое приложение доступно по адресу: **[http://pirozhkov-aa.ru](http://pirozhkov-aa.ru)**  
+К `Grafana` можно подключиться по ссылке: **[http://k8s.pirozhkov-aa.ru](http://k8s.pirozhkov-aa.ru)**  с логином: `admin` и паролем: `ADMIN123456!`  
+Репозиторий тестового приложения: **[https://gitlab.com/tabwizard/nginxn](https://gitlab.com/tabwizard/nginxn)**  
 **[Docker image](https://hub.docker.com/repository/docker/tabwizard/nginxn)** для тестового приложения  
 **[Репозиторий](https://gitlab.com/tabwizard/k8s-tools)** и **[Docker image](https://hub.docker.com/repository/docker/tabwizard/k8s-tools)** для деплоя тестового приложения в `gitlab pipeline`  
-Репозиторий `qbec` с настройками для кластера **[https://gitlab.com/tabwizard/nginxn/-/tree/main/webtestapp](https://gitlab.com/tabwizard/nginxn/-/tree/main/webtestapp)**  
-Репозиторий **[Terraform](./terraform)**  
-Репозиторий `kubespray` полностью дефолтный за исключением **[hosts.yaml (инвентори для kubespray)](/terraform/hosts.yaml)**  
-
+Репозиторий `qbec` с настройками для кластера: **[webtestapp](https://gitlab.com/tabwizard/nginxn/-/tree/main/webtestapp)**  
+Репозиторий **[Terraform](https://gitlab.com/tabwizard/netology_graduation_project/-/tree/main/terraform)**  
+Репозиторий `kubespray` полностью дефолтный за исключением **[нескольких файлов инвентори для kubespray](https://gitlab.com/tabwizard/netology_graduation_project/-/tree/main/kubespray)**  

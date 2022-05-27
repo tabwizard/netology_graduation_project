@@ -10,11 +10,9 @@ resource "yandex_compute_instance" "k8s-node" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd8jekrp7jglcetucr2a"
-      // "fd8jekrp7jglcetucr2a" Ubuntu 20.04 LTS
-      // "fd8p7vi5c5bbs2s5i67s"  centos7
-      size = 30
-      type = "network-hdd"
+      image_id = "${data.yandex_compute_image.ubuntu-2004-lts.id}"
+      size     = 30
+      type     = "network-hdd"
     }
   }
 
@@ -27,5 +25,8 @@ resource "yandex_compute_instance" "k8s-node" {
     user-data = "${file("meta.txt")}"
   }
 
+  lifecycle {
+    ignore_changes = [boot_disk[0].initialize_params[0].image_id]
+  }
 }
 
