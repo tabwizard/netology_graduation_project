@@ -213,7 +213,7 @@ terraform init -backend-config "access_key=$YC_STORAGE_ACCESS_KEY" -backend-conf
 ![YC s3 backet](./img/4.png)  
 ![YC s3 backet](./img/5.png)  
 
-Установим kubespray и **[напишем скрипт](/terraform/generate_inventory.sh)**, который будет генерировать **[hosts.yaml (инвентори для kubespray)](/terraform/hosts.yaml)** из развернутой terraform-ом инфраструктуры.  
+Установим kubespray и **[напишем скрипт](/terraform/generate_inventory.sh)**, который будет генерировать **[hosts.yaml (инвентори для kubespray)](/kubespray/hosts.yaml)** из развернутой terraform-ом инфраструктуры.  
 Напишем скрипты (**[1](./setup_k8s.sh), [2](./terraform/get_k8s_config.sh)**), которые будут:
 
 - подготавливать инвентори для kubespray из шаблона,
